@@ -47,7 +47,7 @@ if not os.path.exists(db_path):
 
 else:
     # If the database already exists, load it
-    print("Vector store already exists. No need to initialize.")
+    print("Vector store already exists. No need to initialize. \n")
     db = Chroma(
             persist_directory=db_path,
             embedding_function=llm_transformer,
@@ -57,7 +57,7 @@ else:
 # Set up the retriever to search for similar documents
 retriever = db.as_retriever(
             search_type="similarity_score_threshold",
-            search_kwargs={"k": 7, "score_threshold": 0.1},
+            search_kwargs={"k": 10, "score_threshold": 0.1},
         )
 
 # Define the system prompt for contextualizing user questions
@@ -110,7 +110,7 @@ def continual_chat():
         # Process the user's query through the retrieval chain
         result = rag_chain.invoke({"input": query, "chat_history": chat_history})
         # Display the AI's response
-        print(f"AI: {result['answer']}")
+        print(f"AI: {result['answer']}\n")
         # Update the chat history
         chat_history.append(HumanMessage(content=query))
         chat_history.append(SystemMessage(content=result["answer"]))
