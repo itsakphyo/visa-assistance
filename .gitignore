@@ -1,2 +1,5 @@
 #python vitrual environments
 venv
+
+#vector database file
+db
